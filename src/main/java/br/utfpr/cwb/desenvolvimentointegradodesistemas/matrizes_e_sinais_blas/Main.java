@@ -32,95 +32,28 @@ public class Main {
         float[][] matriz = null;
         FloatMatrix matrizM = null, matrizN = null, matrizA = null, matrizMN
                 = null, matrizAM = null, matrizMA = null;
+        
+        
+        Csv csv = new Csv(';');
+        
+        matriz = csv.readMatriz("Dados/M.csv");
+        csv.printMatrizFloats(matriz);
+        
+        //Passando pra um objeto JBLAS
+        matrizM = new FloatMatrix(matriz);
 
-        //Trazer matriz em CSV pro projeto
-        try {
-            CSVParser parser = new CSVParserBuilder().withSeparator(';')
-                    .build(); //pra separar com ; ao invés do padrão ,
-
-            //responsável por ler o arquivo //FileNotFoundException
-            FileReader filereader = new FileReader("Dados/M.csv");
-
-            //ler o CSV com o leitor de arquivo utilizando um parser diferente
-            CSVReader reader = new CSVReaderBuilder(filereader)
-                    .withCSVParser(parser).build();
-
-            //Adiciona o CSV para uma Lista de um Array de Strings /IOException
-            List<String[]> matrizStrings = reader.readAll();
-
-            //Ok, está lendo, porém está tudo em string.
-            matriz = new float[matrizStrings.size()][];
-
-            for (int i = 0; i < matrizStrings.size(); i++) {
-                //cria array de float com o tamanho de strings naquela linha
-                float[] linha = new float[matrizStrings.get(i).length];
-
-                for (int j = 0; j < matrizStrings.get(i).length; j++) {
-                    linha[j] = Float.parseFloat(matrizStrings.get(i)[j]);
-                }
-
-                matriz[i] = linha;
-            }
-
-            //Agora que transformou num Array de Array de floats, basta printar
-            for (int i = 0; i < matriz.length; i++) {
-                for (int j = 0; j < matriz[i].length; j++) {
-                    System.out.print(matriz[i][j] + "  ");
-                }
-                System.out.println("");
-            }
-
-            //Passando pra um objeto JBLAS
-            matrizM = new FloatMatrix(matriz);
-
-            //As matrizes passadas para teste (M e N) são iguais
-            matrizN = new FloatMatrix(matriz);
-
-            // IMPORTANTE!
-            // Daqui até o final do try/catch será código repetido,
-            // botando só pra testar, depois criar classes/métodos certinho
-            System.out.println("Fazendo 'matriz' a");
-            filereader = new FileReader("Dados/a.csv");
-            reader = new CSVReaderBuilder(filereader).withCSVParser(parser)
-                    .build();
-            matrizStrings = reader.readAll();
-
-            matriz = new float[matrizStrings.size()][];
-            for (int i = 0; i < matrizStrings.size(); i++) {
-                //cria array de float com o tamanho de strings naquela linha
-                float[] linha = new float[matrizStrings.get(i).length];
-
-                for (int j = 0; j < matrizStrings.get(i).length; j++) {
-                    linha[j] = Float.parseFloat(matrizStrings.get(i)[j]);
-                }
-
-                matriz[i] = linha;
-            }
-
-            for (int i = 0; i < matriz.length; i++) {
-                for (int j = 0; j < matriz[i].length; j++) {
-                    System.out.print(matriz[i][j] + "  ");
-                }
-                System.out.println("");
-            }
-
-            matrizA = new FloatMatrix(matriz);
-
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        //As matrizes passadas para teste (M e N) são iguais
+        matrizN = new FloatMatrix(matriz);
+        
+        System.out.println("Fazendo 'matriz' a");
+        matriz = csv.readMatriz("Dados/a.csv");
+        matrizA = new FloatMatrix(matriz);
 
         //Matriz carregada, está em float
         //Próximo passo: usar JBLAS
         //Quatro classes:  FloatMatrix, DoubleMatrix, ComplexFloatMatrix and
         //ComplexDoubleMatrix in the package org.jblas 
         //representam real and complex matrices in single and double precision.
-        //Terá que suportar Sparse Matrix(Matrizes Esparsas-grande quantidade
-        //        de zeros)? O jblas não suporta.
-        //Trabalharemos com valores Float ou terá que expandir até Double?
-        //        Custo de tempo de processamento.
         //matrizM = new FloatMatrix(matriz);
         System.out.println("rows: " + matrizM.rows);
 
