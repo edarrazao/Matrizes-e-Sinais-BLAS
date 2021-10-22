@@ -26,7 +26,7 @@ public class Csv {
     //Construtor
     public Csv(char separador) {
         parser = new CSVParserBuilder().withSeparator(separador)
-                .build(); //pra separar com ; ao invés do padrão ,
+                .build();
 
     }
 
