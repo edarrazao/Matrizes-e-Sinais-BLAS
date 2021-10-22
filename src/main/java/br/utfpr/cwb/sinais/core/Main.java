@@ -22,7 +22,10 @@ public class Main {
         
         var program = new Program();
         
-        var serivces = new Services();
+        var services = new Services();
+        
+        // Exemplo 
+        // var a = services.VerificadorDeMatriz;
         
         var matriz = new Matriz();
         

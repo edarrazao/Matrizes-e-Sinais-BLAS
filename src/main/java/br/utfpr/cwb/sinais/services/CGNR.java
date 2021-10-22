@@ -8,7 +8,7 @@ package br.utfpr.cwb.sinais.services;
  *
  * @author edupo
  */
-class CGNR {
+public class CGNR {
 
     //Construtor
     public CGNR() {
@@ -34,10 +34,6 @@ class CGNR {
         * Matriz transposta (elevado a T)
         **/
         
-        
-        
-        
-
     }
 
 }

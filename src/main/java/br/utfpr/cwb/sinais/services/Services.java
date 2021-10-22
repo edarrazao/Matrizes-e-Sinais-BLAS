@@ -9,13 +9,13 @@ package br.utfpr.cwb.sinais.services;
  * @author dvieira
  */
 public class Services {
-    public LeitorDeMatriz leitorDeMatriz;
+    public LeitorDeMatriz LeitorDeMatriz;
     public VerificadorDeMatriz VerificadorDeMatriz;
-    public CGNR cgnr;
+    public CGNR CGNR;
 
     public Services() {
-        this.leitorDeMatriz = new LeitorDeMatriz();
+        this.LeitorDeMatriz = new LeitorDeMatriz();
         this.VerificadorDeMatriz = new VerificadorDeMatriz();
-        this.cgnr = new CGNR();
+        this.CGNR = new CGNR();
     }
 }

@@ -19,7 +19,7 @@ import java.util.logging.Logger;
  *
  * @author edupo
  */
-class LeitorDeMatriz {
+public class LeitorDeMatriz {
 
     public CSVParser parser;
 

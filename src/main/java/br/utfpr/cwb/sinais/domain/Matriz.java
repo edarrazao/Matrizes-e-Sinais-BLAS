@@ -11,24 +11,20 @@ import org.jblas.FloatMatrix;
  * @author dvieira
  */
 public class Matriz {
-    public FloatMatrix matriz;
-    public char separator;
-    public char decimalSeparator;
+    public FloatMatrix Matriz;
+    public char Separator;
+    public char DecimalSeparator;
 
-    public Matriz() {
-        
-    }
-
+    public Matriz() { }
+    
     public Matriz(FloatMatrix matriz, char separator) {
-        this.matriz = matriz;
-        this.separator = separator;
+        this.Matriz = matriz;
+        this.Separator = separator;
     }
-    
-    
 
     public Matriz(FloatMatrix matriz, char separator, char decimalSeparator) {
-        this.matriz = matriz;
-        this.separator = separator;
-        this.decimalSeparator = decimalSeparator;
+        this.Matriz = matriz;
+        this.Separator = separator;
+        this.DecimalSeparator = decimalSeparator;
     }   
 }

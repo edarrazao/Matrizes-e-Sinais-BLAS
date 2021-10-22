@@ -10,7 +10,7 @@ import org.jblas.FloatMatrix;
  *
  * @author dvieira
  */
-class VerificadorDeMatriz {
+public class VerificadorDeMatriz {
        
     public VerificadorDeMatriz() {
         
