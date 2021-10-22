@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package br.utfpr.cwb.desenvolvimentointegradodesistemas.matrizes_e_sinais_blas;
+package br.utfpr.cwb.sinais.services;
 
 import com.opencsv.CSVParser;
 import com.opencsv.CSVParserBuilder;
@@ -19,12 +19,15 @@ import java.util.logging.Logger;
  *
  * @author edupo
  */
-public class Csv {
+class LeitorDeMatriz {
 
     public CSVParser parser;
 
+    public LeitorDeMatriz() {
+    }
+
     //Construtor
-    public Csv(char separador) {
+    public LeitorDeMatriz(char separador) {
         parser = new CSVParserBuilder().withSeparator(separador)
                 .build();
 
@@ -68,9 +71,9 @@ public class Csv {
             }
 
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(Csv.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(LeitorDeMatriz.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
-            Logger.getLogger(Csv.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(LeitorDeMatriz.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         return matriz;

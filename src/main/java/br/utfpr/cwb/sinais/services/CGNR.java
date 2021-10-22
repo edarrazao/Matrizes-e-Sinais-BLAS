@@ -2,22 +2,22 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package br.utfpr.cwb.desenvolvimentointegradodesistemas.matrizes_e_sinais_blas;
+package br.utfpr.cwb.sinais.services;
 
 /**
  *
  * @author edupo
  */
-public class Processamento {
+class CGNR {
 
     //Construtor
-    public Processamento() {
+    public CGNR() {
 
     }
 
     //Codificar um protótipo com o Algoritmo CGNR. Validar os resultados com os dados experimentais.
     //Medir o tempo total de execução e o consumo de recursos como memória e ocupação de CPU.
-    public void algoritmoCGNR() {
+    public void executar() {
         /**
         Entrada: H e g
         Saída: f
