@@ -5,16 +5,6 @@
  */
 package br.utfpr.cwb.desenvolvimentointegradodesistemas.matrizes_e_sinais_blas;
 
-import com.opencsv.CSVParser;
-import com.opencsv.CSVParserBuilder;
-import com.opencsv.CSVReader;
-import com.opencsv.CSVReaderBuilder;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.jblas.FloatMatrix;
 
 /**
