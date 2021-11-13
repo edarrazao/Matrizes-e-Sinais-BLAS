@@ -96,7 +96,7 @@ public class CGNR {
             pb = zb.add(bipi);
             
             //cálculo do erro
-            erro = rb.norm2() - r0.norm2();
+            erro = Math.abs(rb.norm2() - r0.norm2());
             System.out.println("Erro está em: " + erro);
             
             //coloca os auxiliares B como 0 (o i+1 vira i)

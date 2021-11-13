@@ -10,7 +10,9 @@ import br.utfpr.cwb.sinais.services.Services;
 import br.utfpr.cwb.sinais.domain.Matriz;
 import org.jblas.FloatMatrix;
 import ij.process.*;
+import java.awt.Image;
 import java.awt.image.BufferedImage;
+import java.awt.image.RenderedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -97,9 +99,14 @@ public class Main {
         ImageProcessor ip = new FloatProcessor(60, 60, imagem.toArray());
         ip.flipVertical();
         ip.rotate(90);
+        ip.resetMinAndMax();
+//        ip.setMinAndMax(0, 255);
+        System.out.println("background: " + ip.getBackgroundValue());
+        System.out.println("max: " + ip.getMax());
+        System.out.println("min: " + ip.getMin());
         BufferedImage bi = ip.getBufferedImage();
         try {
-            File output = new File("saved1b.png");
+            File output = new File("saved1c.png");
             ImageIO.write(bi, "png", output);
             
         } catch (IOException ex) {
