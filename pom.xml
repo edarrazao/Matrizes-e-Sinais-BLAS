@@ -19,11 +19,15 @@
             <version>1.2.5</version>
         </dependency>
         
+        <!-- https://mvnrepository.com/artifact/net.imagej/ij -->
+        <!-- https://imagej.nih.gov/ij/developer/source/ij/process/FloatProcessor.java.html -->
         <dependency>
-            <groupId>com.opencsv</groupId>
-            <artifactId>opencsv</artifactId>
-            <version>4.2</version>
+            <groupId>net.imagej</groupId>
+            <artifactId>ij</artifactId>
+            <version>1.53j</version>
         </dependency>
+
+        
     </dependencies>
     
 </project>

@@ -7,15 +7,33 @@ package br.utfpr.cwb.sinais.services;
 /**
  *
  * @author dvieira
+ * @author edupo
  */
 public class Services {
-    public LeitorDeMatriz LeitorDeMatriz;
-    public VerificadorDeMatriz VerificadorDeMatriz;
-    public CGNR CGNR;
+    private CGNR CGNR;
+    private FileParser fileParser;
 
     public Services() {
-        this.LeitorDeMatriz = new LeitorDeMatriz();
-        this.VerificadorDeMatriz = new VerificadorDeMatriz();
         this.CGNR = new CGNR();
+        this.fileParser = new FileParser();
     }
+
+    //Getters and Setters
+    public CGNR getCGNR() {
+        return CGNR;
+    }
+
+    public void setCGNR(CGNR CGNR) {
+        this.CGNR = CGNR;
+    }
+
+    public FileParser getFileParser() {
+        return fileParser;
+    }
+
+    public void setFileParser(FileParser fileParser) {
+        this.fileParser = fileParser;
+    }
+    
+    
 }

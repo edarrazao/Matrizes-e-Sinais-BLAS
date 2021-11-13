@@ -8,7 +8,14 @@ package br.utfpr.cwb.sinais.core;
 import br.utfpr.cwb.sinais.api.Program;
 import br.utfpr.cwb.sinais.services.Services;
 import br.utfpr.cwb.sinais.domain.Matriz;
-
+import org.jblas.FloatMatrix;
+import ij.process.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 
 /**
  *
@@ -19,88 +26,86 @@ import br.utfpr.cwb.sinais.domain.Matriz;
 public class Main {
 
     public static void main(String args[]) {
-        
-        var program = new Program();
-        
-        var services = new Services();
-        
+
+        Program program = new Program();
+
+        Services services = new Services();
+
         // Exemplo 
         // var a = services.VerificadorDeMatriz;
+        Matriz matriz = new Matriz();
+
+        //
+        //START
+        //
+        System.out.println("Iniciando...");
+        FloatMatrix matrizH;
         
-        var matriz = new Matriz();
+        //Replace nos files
+        services.getFileParser().replace("Dados/M.csv", ";", ",", "Dados/M2.csv");
+        services.getFileParser().replace("Dados/N.csv", ";", ",", "Dados/N2.csv");
         
+        //Carregar matriz H
+        System.out.println("carregando h");
+        Matriz h = new Matriz("Dados/H-1.csv");
+        System.out.println("h carregado, tentar duplicar");
+        matrizH = h.getMatriz().dup();
+        
+        //Carregar vetor de sinal G
+        Matriz vetor_sinal_g = new Matriz("Dados/G-1 (sinal 1).csv");
+        System.out.println("G-1 carregado.");
+        
+        
+        //cálculo do fator de redução (c)
+        System.out.println("fator de redução iniciado, aguarde");
+        FloatMatrix ht = matrizH.transpose();
+        //comentado pq demora e n sei onde utilizar ainda
+//        FloatMatrix hth = ht.mmul(matrizH);
+//        float c = hth.norm2();
+//        System.out.println("fator de redução (c): " + c);
+        
+        
+        //cálculo do coeficiente de regularização (lambda)
+        float lambda;
+        FloatMatrix htg = ht.mmul(vetor_sinal_g.getMatriz());
+        if(htg.max() > Math.abs(htg.min())) {
+            lambda = (float) (htg.max() * 0.1);
+        }else {
+            lambda = (float) (Math.abs(htg.min()) * 0.1);
+        }
+        System.out.println("Coeficiente de regularização (lambda) é: " + lambda);
+        
+        
+        //Cálculo do erro é usado na função do CGNR (?)
+        
+        
+        //Cálculo do ganho de sinal (gama)
+        //Só há um elemento sensor
+        System.out.println("começando o ganho de sinal");
+        for (int l = 0; l < vetor_sinal_g.getMatriz().length; l++) {
+            float gama = (float) (100 + 1/20 * l * Math.sqrt(l));
+            vetor_sinal_g.getMatriz().put(l, vetor_sinal_g.getMatriz().get(l)*gama);
+        }
+        System.out.println("ganho de sinal realizado");
+        
+        
+        //chamar função
+        //imagem é uma matriz(vetor) 3600,1
+        FloatMatrix imagem = services.getCGNR().executar(matrizH, vetor_sinal_g.getMatriz());
+        
+        //Transformar em imagem
+        ImageProcessor ip = new FloatProcessor(60, 60, imagem.toArray());
+        ip.flipVertical();
+        ip.rotate(90);
+        BufferedImage bi = ip.getBufferedImage();
+        try {
+            File output = new File("saved1b.png");
+            ImageIO.write(bi, "png", output);
+            
+        } catch (IOException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
 
 }
-//float[][] matriz = null;
-//        FloatMatrix matrizM = null, matrizN = null, matrizA = null, matrizMN
-//                = null, matrizAM = null, matrizMA = null;
-//        
-//        
-//        LeitorDeMatriz csv = new LeitorDeMatriz(';');
-//        
-//        matriz = csv.readMatriz("Dados/M.csv");
-//        csv.printMatrizFloats(matriz);
-//        
-//        //Passando pra um objeto JBLAS
-//        matrizM = new FloatMatrix(matriz);
-//
-//        //As matrizes passadas para teste (M e N) são iguais
-//        matrizN = new FloatMatrix(matriz);
-//        
-//        System.out.println("Fazendo 'matriz' a");
-//        matriz = csv.readMatriz("Dados/a.csv");
-//        matrizA = new FloatMatrix(matriz);
-//
-//        //Matriz carregada, está em float
-//        //Próximo passo: usar JBLAS
-//        //Quatro classes:  FloatMatrix, DoubleMatrix, ComplexFloatMatrix and
-//        //ComplexDoubleMatrix in the package org.jblas 
-//        //representam real and complex matrices in single and double precision.
-//        //matrizM = new FloatMatrix(matriz);
-//        System.out.println("rows: " + matrizM.rows);
-//
-//        System.out.println("columns: " + matrizM.columns);
-//
-//        System.out.println("maior: " + matrizM.max() + " na pos: "
-//                + matrizM.argmax());
-//
-//        matrizM.print();
-//        matrizN.print();
-//
-//        //Para que o produto exista, o número de colunas da primeira matriz 
-//        //tem que ser igual ao número de linhas da segunda matriz. 
-//        //Além disso, o resultado da multiplicação é uma matriz que possui o
-//        //mesmo número de linhas da primeira matriz e o mesmo número de colunas
-//        //da segunda matriz.
-//        matrizMN = new FloatMatrix(matrizM.rows, matrizN.columns);
-//
-//        //calcular M*N e salvar em MN
-//        matrizM.mmuli(matrizN, matrizMN);
-//        System.out.println("M*N:");
-//        matrizMN.print();
-//
-//        System.out.println("Matriz A:");
-//        matrizA.print();
-//
-//        //calcular a*M e salvar em AM
-//        matrizAM = new FloatMatrix(matrizA.rows, matrizM.columns);
-//        matrizA.mmuli(matrizM, matrizAM);
-//        System.out.println("a*M:");
-//        matrizAM.print();
-//        //Resultado com 6 casas decimais, exemplo usa apenas 2. Manter?
-//
-//        //e por último, a multiplicação que não tem resposta no exemplo
-//        //calcular M*a e salvar em MA
-//        matrizMA = new FloatMatrix(matrizM.rows, matrizA.columns);
-//
-//        //matrizM.mmuli(matrizA, matrizMA); 
-//        //Porém é impossível! Como já explicado a condição de existência da
-//        //multiplicação de matrizes.
-//        //Exception in thread "main" org.jblas.exceptions.SizeException:
-//        //Number of columns of left matrix must be equal to number of rows of
-//        //right matrix.
-//        //System.out.println("M*a:");
-//        //matrizMA.print();
-//        //Para a primeira semana é isso, provavelmente ainda é necessário
-//        //codificar a gravação de matrizes em arquivo CSV.
